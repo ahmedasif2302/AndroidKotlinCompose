@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
         LaunchedEffect(key1 = navInfo) {
             Log.d("NavigationManager", "MainActivity to: $navInfo")
             navInfo?.id?.let {
-                navController.navigate(it)
+                navController.navigate(it, navInfo.navOptions)
             }
         }
     }

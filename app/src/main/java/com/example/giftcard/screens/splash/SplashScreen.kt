@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavOptions
 import com.example.giftcard.navigation.NavInfo
 import com.example.giftcard.navigation.Routes
 
@@ -19,7 +20,14 @@ fun SplashScreen(viewModel: SplashViewModel = hiltViewModel<SplashViewModel>()) 
         Column(modifier = Modifier.padding(innerPadding)) {
             Text(text = "Welcome to Splash Gift Card!")
             Button(onClick = {
-                viewModel.navManager.navigateTo(NavInfo(id = Routes.LOGIN))
+                viewModel.navManager.navigateTo(
+                    NavInfo(
+                        id = Routes.LOGIN, navOptions = NavOptions.Builder().setPopUpTo(
+                            Routes.SPLASH, inclusive = true
+                        ).build()
+                    )
+                )
+
             }) {
                 Text(text = "Go to Login")
             }
