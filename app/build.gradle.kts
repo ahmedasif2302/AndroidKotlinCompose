@@ -66,7 +66,11 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.9.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
     implementation("androidx.hilt:hilt-navigation-compose:1.3.0-alpha01")
-    
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
+    implementation("androidx.compose.runtime:runtime-livedata:1.8.1")
+
+
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
