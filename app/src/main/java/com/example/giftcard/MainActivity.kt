@@ -12,12 +12,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.giftcard.navigation.AppNavigation
 import com.example.giftcard.navigation.NavigationManager
+import com.example.giftcard.network.dataRepository.ProductDataRepository
 import com.example.giftcard.ui.theme.GiftCardTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -25,8 +29,20 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var navManager: NavigationManager
 
+    @Inject
+    lateinit var productDataRepository: ProductDataRepository
+
+    private fun fetchProducts() {
+        lifecycleScope.launchWhenStarted {
+            productDataRepository.makeProductsCall().onEach {
+                Log.d("Products", "Fetched products: $it")
+            }.collect()
+        }
+    }
+
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
+        fetchProducts()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
