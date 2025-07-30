@@ -15,7 +15,7 @@ data class Resource<out T>(val data: T?, val status: Status, val error: Error) {
             Resource(data = data, status = Status.SUCCESS, error = Error(message = "", code = -1))
 
         fun <T> error(data: T? = null, message: String?): Resource<T> = Resource(
-            data = null,
+            data = data,
             status = Status.ERROR,
             error = Error(message = message ?: "An error occurred", code = -1)
         )

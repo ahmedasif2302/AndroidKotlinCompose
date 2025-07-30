@@ -25,4 +25,16 @@ class ProductDataSource @Inject constructor(private val productApi: IProducts) {
     }
 
 
+    suspend fun getProductById(id: Int): Resource<ProductsItem?> {
+        return withContext(Dispatchers.IO) {
+            val response = productApi.getProductById(id)
+            Log.d("ProductDataSource", "Response: $response")
+            if (response.isSuccessful) {
+                Resource.success(data = response.body())
+            } else {
+                Resource.error(data = null, message = "Error fetching products")
+            }
+        }
+    }
+
 }

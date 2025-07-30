@@ -12,6 +12,9 @@ class ProductDataRepository @Inject constructor(val productDataSource: ProductDa
 
     suspend fun makeProductsCall() = makeSafeApiCall { productDataSource.getProducts() }
 
+    suspend fun makeProductByIdCall(id: Int) =
+        makeSafeApiCall { productDataSource.getProductById(id) }
+
     private suspend fun <T> makeSafeApiCall(api: suspend () -> Resource<T?>) = flow<Resource<T?>> {
         try {
             emit(Resource.loading())
